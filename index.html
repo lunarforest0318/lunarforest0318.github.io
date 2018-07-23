@@ -1,0 +1,592 @@
+<!DOCTYPE html>
+<head>
+<div class="header">
+  <h1>Where to Ski in Japan?</h1>
+</div>
+  <meta charset="utf-8">
+  <script src="//d3js.org/d3.v4.js"></script>
+ <script src="https://rawgit.com/susielu/d3-annotation/master/d3-annotation.min.js"></script>
+  <style>
+    body { margin:0;position:fixed;top:0;right:0;bottom:0;left:0; }
+    /* svg { width:100%; height: 100% } */
+  </style>
+<style>
+
+
+  .header {
+    position: fixed;
+    top: 0;
+    z-index: 1;
+    width: 100%;
+    background-color: #f1f1f1;
+    text-align: center;
+  }
+
+
+  .content{
+ padding: 10px 0;
+ margin: 20px auto 0 auto;
+ width: 70%;
+ height: 90%;
+ overflow:scroll;
+
+  }
+.control-group{ padding: 20px 0;}
+
+.subtitle0{
+      text-align: center;
+      font-size: 30px;
+      font-weight:bold;
+      margin-left: 200px;
+    }
+
+.subtitle1{
+    margin-left: 100px;
+    font-size: 20px;
+    font-weight:bold;
+  }
+.subtitle2{
+  margin-left: 370px;
+  font-size: 20px;
+  font-weight:bold;
+}
+
+.about{
+  margin-left:200px;
+  margin-top: 100px;
+
+}
+
+
+img{float:left;}
+#Essay {
+    width: 100%;
+    padding: 50px 0;
+    text-align: left;
+    background-color: lightblue;
+    margin-top: 20px;
+
+}
+
+</style>
+
+
+</head>
+
+
+<body>
+  <div class="about">
+      <button onclick="myFunction()">About the Visualization</button>
+  </div>
+
+  <script>
+function myFunction() {
+    var x = document.getElementById("Essay");
+    if (x.style.display === "none") {
+        x.style.display = "block";
+    } else {
+        x.style.display = "none";
+    }
+}
+</script>
+  <div class="content">
+    <div id="Essay">
+
+
+  <h3>Hybrid Structure</h3>
+         <p>This narrative visualization follows the Martini Glass structure. <br>Firstly, it starts with the question "Where to ski in Japan?"
+           <br>Then it lists some editors' recommendations for the best ski resorts in Japan. <br>Lastly, it allows users to select the best ski resort that fits their skier level.
+           User can choose to see the locations and over ratings for the skier level they select.
+           <br><br>In addtion, tooltip is used in the map chart for a drill-down story. When users hover over on any data points on the map, they can see the name of the ski resort as well as the detail score for piste, snow and culture.
+         </p>
+
+  <h3>Scenes</h3>
+         <p>There are three scenes used in this narrative visualization. Users can click "Beginner", "Intermediate" or "Advanced" buttons to switch between different scenes.
+           Scenes are consist in terms of the layout and structure. Annotated chart layout is used in the scene (the map) to provide the overview of the data along with the highlight point.<br>
+           The scenes follows a user-directed ordering - user selects one of paths designed by the author.<br><br>
+           Each scene includes two charts. The map view on the left and the bar chart on the right.
+         <br>The map shows the locations of those resorts on a Japanese map. This is intuitive to the users because when we talk about a location, we want to know where it is.
+         It's also helpful for users who want to go to multiple ski resorts in one trip. It's easy to find the clusters on the map so they can choose several resorts that are close together.<br><br>
+         The bar chart is also very easy to understand. It provides the overall score for all the ski resorts in decend order.
+         <br><br>Both graphs show the overview of all the ski resorts. And then tooltip is used on the map to allow drill-down details on demand. </p>
+
+  <h3>Annotations</h3>
+     <p>The map chart uses annotations to highlight the best ski resort for the skier level a user select. Annotations cleared between scenes because I only want to show the best ski resort for the category that a user selected.
+        For example, the annotation of "best for beginner" won't apply to the scenes for intermediate skiers or advanced skiers.
+       <br><br> When the user click the button to switch to a different scene, d3 will clear the whole svg including the annotation, and then load the new data and add the corresponding annotations to the scene selected.
+    </p>
+
+  <h3>Parameters</h3>
+    <p>There are three parameters used in this narrative visualization, "Beginner", "Intermediate" and "Advanced". These paramters allow users to select which scene to show. See below the trigger section for details about how parameters work for the scene control.
+    </p>
+
+  <h3>Triggers</h3>
+  <p>
+    When users click the button (user interface event: "onclick"), the trigger works here to filter the relevant data and update the data points on the scenes. For example, when a user click "Beginner" button,
+    an event happens (onclick="select('Beginner')"), and the parameter "Beginner" will be sent to the function "select". The "select" function further calls the "render" function,
+    which applies a filter to the dataset based on the parameter value when loading the data: <br>.data(data.filter(function (d){return d.Class==category})).
+    <br>As a result, the graph will be updated with the filtered dataset.
+    <br><br>
+    In addtion, the tooltip in the map also uses triggers. When users hover over the mouse on the dot in the map and then leave, three user interface events are used here:
+    <br><br>
+    mouseover: when user's mouse pointer entered the trigging area, it shows the tooltip.
+    <br>
+    mousemove: every time the mouse pointer is moved over the trigging area, it returns the tooltip details (resort name, scores etc.)
+    <br>
+    mouseout: when user's mouse pointer is moved out of the trigging area, it hides the tooltip.
+  </p>
+
+
+
+  </div>
+  <p>
+    Japan's reputation for serving up insane amounts of snow is legendary. From the northern island of Hokkaido to the more southerly island of Kyushu, the nation of Japan boasts over 500 ski resorts.
+    Now, in an ideal world we'd list the pros and cons of every single ski resort in Japan, and tell you every single thing you need to know about them. Unfortunately, it would just take way too long.
+    Instead, here's a walkthrough for some of the best ski resorts in Japan and some convincing reasons why you should visit them.
+  </p>
+
+  <div>
+  <h2>Niseko, Hokkaido</h2>
+  <p><img src="image/niseko.jpg" style="width:320px; height:240px; margin-right:15px;">
+    The town of Niseko, on the island of Hokkaido, won the title of 'Japan's Best Ski Resort' at the World Ski Awards 2015.
+    Located in the Abuta District, Shiribeshi Subprefecture, Niseko also refers to the biggest and most popular cluster of ski resorts on Japan's northernmost main island.
+    Niseko is the most famous ski resort in Japan, known for having tons of light powder snow, spectacular backcountry and a large number of foreigners - especially Australians - who in recent years have been responsible for popularizing the resort area with the skiing/snowboarding community outside of Japan. As a result, Niseko's resorts are very accessible and welcoming to foreign visitors, which they keep busy with plenty of vast, long ski runs, endless powder, and a growing number of after-ski activities.<br><br>
+    In addition to kilometers of ski trails, many of Niseko's resorts offer winter adventure seekers the option to explore off trail skiing, a relatively uncommon attraction at most other ski resorts in Japan. The backcountry can be accessed through special gates around the resorts or experienced on guided tours and helicopter tours. The latter is also possible on nearby Mount Yotei, a nearly perfect volcanic cone, which can be seen from Niseko.
+  </p>
+  </div>
+
+<div>
+  <h2>Shiga Kogen, Honshu</h2>
+  <p><img src="image/shiga kogen.jpg" style="width:320px; height:240px; margin-right:15px;">
+    Size-wise, the Shiga Kogen Ski Area is 4.25 square kilometres (1.64 square miles). It's the largest combined ski area in Japan, and one of the biggest in the world.
+    This enormous Japanese ski resort, located in the Shiga Highlands of the Nagano Prefecture, is actually made up of approximately 21 smaller resorts that are all interconnected.
+    With 71 ski lifts waiting to take skiers and snowboarders here, there, and everywhere across the area it's easy to see why so many see Shiga Kogen as the ultimate destination for a ski holiday in Japan.<br><br>
+    Shiga Kogen ski area has a huge advantage over others (e.g. Hakuba, Myoko Kogen) in that many of the resorts are inter-connected via the lifts and slopes. Fifteen of the ski resorts at the north-eastern end of Shiga Kogen (the left hand side of the trail map) are inter-connected. This includes the large Yakebitaiyama ski area, Okushiga Kogen and the Ichinose areas, and many visitors to Shiga Kogen may not venture past these fifteen resorts.
+
+To get to the ski resorts on the right hand side of the map, you’ll need to catch a free shuttle bus, which takes about an hour from one end of Shiga Kogen to the other. These resorts are only partially inter-connected. Yokoteyama is connected to Shibutoge, but there’s only a one-way connection with Kumanoyu.
+  </p>
+</div>
+  <h2>Nozawa Onsen, Honshu</h2>
+  <p><img src="image/nozawa onsen.jpg" style="width:320px; height:240px; margin-right:15px;">
+    Nozawa Onsen is located in the northern part of the Nagano Prefecture on the main island of Honshu. The resort is 46km northeast of the city of Nagano and 249km northwest of Tokyo. It is easily reached by bullet train, bus or taxi as detailed at the end of this post.
+    The ski area on Nozawa Onsen is one of the largest in Japan covering some 298 hectares with 50 runs suitable for all levels. A bonus is that there is guaranteed snow, with an average depth of 3.5 meters of mostly powder.
+    <br><br>There is also a vertical fall of 1085 metres making for some very long runs. One of the runs for beginner to intermediate levels is 10kms. Snowboarders and skiers have a lot of choices and going off-piste are really popular with daredevil skiers.
+    Many of the runs are very wide, and the slopes are not at all crowded. On piste, there are many traditional Japanese cafes. What we found here is that the villagers are very welcoming people who create a really good atmosphere.
+    <br><br><br>
+  </p>
+
+
+
+  <text class="subtitle0">Select the Resort Based on Your Skier Level</text>
+
+  <div class="control-group">
+      <button onclick="select('Beginner')">
+          Beginner
+      </button>
+      <button onclick="select('Intermediate')">
+          Intermediate
+      </button>
+      <button onclick="select('Advanced')">
+          Advanced
+      </button>
+      <!-- <button onclick="select()">
+          Clear
+      </button> -->
+  </div>
+  <br>
+
+  <text class="subtitle1">Resort Location</text>
+  <text class="subtitle2">Overall Rating</text>
+
+
+  <div class="visualization">
+        <svg width="500" height="500" id="svg1"></svg> <!-- svg1 the japan map -->
+        <svg width="500" height="500" id="svg2"></svg> <!-- svg2 the bar chart -->
+  </div>
+
+
+
+
+  <script>
+  // d3.csv(“xxx.csv”, function(csvData){data=csvData;})
+
+  var data = [
+    {
+      "Resort": "Myoko Kogen",
+      "Lat": 36.8725129,
+      "Long": 138.2123197,
+      "Class": "Beginner",
+      "Piste": 67,
+      "Snow": 87,
+      "Culture": 75,
+      "Overall": 77
+    },
+    {
+      "Resort": "Akakura",
+      "Lat": 36.8941439,
+      "Long": 138.1780454,
+      "Class": "Beginner",
+      "Piste": 62,
+      "Snow": 82,
+      "Culture": 75,
+      "Overall": 73
+    },
+    {
+      "Resort": "Nozawa Onsen",
+      "Lat": 36.9229021,
+      "Long": 138.4406411,
+      "Class": "Beginner",
+      "Piste": 80,
+      "Snow": 77,
+      "Culture": 85,
+      "Overall": 80
+    },
+    {
+      "Resort": "Tsugaike",
+      "Lat": 36.7413122,
+      "Long": 138.084543,
+      "Class": "Beginner",
+      "Piste": 62,
+      "Snow": 82,
+      "Culture": 50,
+      "Overall": 68
+    },
+    {
+      "Resort": "Kagura",
+      "Lat": 37.0322462,
+      "Long": 138.8213625,
+      "Class": "Beginner",
+      "Piste": 70,
+      "Snow": 80,
+      "Culture": 35,
+      "Overall": 67
+    },
+    {
+      "Resort": "Shiga Kogen",
+      "Lat": 36.7836609,
+      "Long": 138.4655015,
+      "Class": "Intermediate",
+      "Piste": 87,
+      "Snow": 87,
+      "Culture": 55,
+      "Overall": 81
+    },
+    {
+      "Resort": "Furano",
+      "Lat": 43.3421398,
+      "Long": 142.3832254,
+      "Class": "Intermediate",
+      "Piste": 72,
+      "Snow": 80,
+      "Culture": 65,
+      "Overall": 74
+    },
+    {
+      "Resort": "Niseko",
+      "Lat": 42.8482752,
+      "Long": 140.6298415,
+      "Class": "Intermediate",
+      "Piste": 80,
+      "Snow": 72,
+      "Culture": 85,
+      "Overall": 82
+    },
+    {
+      "Resort": "Zao Onsen",
+      "Lat": 36.7413122,
+      "Long": 138.084543,
+      "Class": "Intermediate",
+      "Piste": 72,
+      "Snow": 82,
+      "Culture": 60,
+      "Overall": 74
+    },
+    {
+      "Resort": "Rusutsu",
+      "Lat": 42.7373599,
+      "Long": 140.8755912,
+      "Class": "Intermediate",
+      "Piste": 70,
+      "Snow": 90,
+      "Culture": 55,
+      "Overall": 75
+    },
+    {
+      "Resort": "Shiga Kogen",
+      "Lat": 36.7836609,
+      "Long": 138.4655015,
+      "Class": "Advanced",
+      "Piste": 87,
+      "Snow": 87,
+      "Culture": 55,
+      "Overall": 81
+    },
+    {
+      "Resort": "Nozawa Onsen",
+      "Lat": 36.9229021,
+      "Long": 138.4406411,
+      "Class": "Advanced",
+      "Piste": 80,
+      "Snow": 77,
+      "Culture": 85,
+      "Overall": 80
+    },
+    {
+      "Resort": "Goryu",
+      "Lat": 36.684983,
+      "Long": 137.828343,
+      "Class": "Advanced",
+      "Piste": 77,
+      "Snow": 80,
+      "Culture": 65,
+      "Overall": 76
+    },
+    {
+      "Resort": "Appi Kogen",
+      "Lat": 40.0022571,
+      "Long": 140.9705409,
+      "Class": "Advanced",
+      "Piste": 70,
+      "Snow": 87,
+      "Culture": 55,
+      "Overall": 74
+    },
+    {
+      "Resort": "Niseko",
+      "Lat": 42.8482752,
+      "Long": 140.6298415,
+      "Class": "Advanced",
+      "Piste": 80,
+      "Snow": 72,
+      "Culture": 80,
+      "Overall": 77
+    }
+
+];
+
+
+// d3.csv("Resort.csv", function(data,i,columns) {
+//     for (i = 1, t = 0; i < columns.length; ++i)
+//     t += data[columns[i]] = +data[columns[i]];
+//     data.total = t;
+//     return data;
+//   }, function(error, data){
+//     if (error) throw error;
+// console.log(data)}
+// )
+//
+// console.log(data);
+
+
+  function render(data, category){
+
+    var width = 3000;
+    var height = 3000;
+
+    var svg1 = d3.select("#svg1")
+    var svg2 = d3.select("#svg2")
+    var mapG = svg1.append("g")
+        circleG = svg1.append("g")
+
+// Create the projection
+    var projection = d3.geoAlbers()
+      .scale(1300)
+      .translate([2200,2200])
+
+    var path = d3.geoPath()
+      .projection(projection);
+// Create the tooltip
+    var tooltip = d3.select("body")
+    	.append("div")
+    	.style("position", "absolute")
+    	.style("z-index", "10")
+    	.style("visibility", "hidden")
+      .style("background-color","white")
+
+// Add the Japan Map
+
+  d3.json("japan.json", function(data) {
+      mapG.selectAll("path")
+      .data(data.features)
+      .enter()
+      .append("path")
+      .attr("d", path)
+      .attr("transform","translate(-700,800)rotate(-90)")
+    })
+
+
+// Add the ski resorts on the map
+
+var circle = circleG.selectAll("circle")
+      .data(data.filter(function (d){return d.Class==category}))
+
+
+circle.enter()
+      .append("circle")
+      .attr("cx", function (data) {return projection([data.Long,data.Lat])[0]})
+      .attr("cy", function (data) {return projection([data.Long,data.Lat])[1]})
+      .attr("r", function(data) {return 3; })
+      .attr("fill", "orange")
+      .attr("transform","translate(-700,800)rotate(-90)")
+      .on("mouseover", function(){return tooltip.style("visibility", "visible");})
+      .on("mousemove", function(data){return tooltip.style("top", (event.pageY-30)+"px").style("left",(event.pageX+30)+"px")
+          .html(data.Resort +"<br>" + "Piste: " + data.Piste + "<br>" + "Snow: " + data.Snow + "<br>" + "Culture: " + data.Culture);})
+      .on("mouseout", function(){return tooltip.style("visibility", "hidden");})
+
+circle.exit().remove();
+
+
+//Add annotations
+const type = d3.annotationLabel
+const annotation_beginner = [{
+note: {
+       label: "Nozawa Onsen",
+       title: "Best for Beginner"
+      },
+data: {Resort: "Nozawa Onsen",	Overall: 80},
+x: 260,
+y: 242,
+dy: -60,
+dx: 120,
+connector: { end: "arrow" }
+}]
+
+const annotation_intermediate = [{
+note: {
+       label: "Niseko",
+       title: "Best for Intermediate"
+      },
+data: {Resort: "Niseko",	Overall: 82},
+x: 257,
+y: 104,
+dy: -20,
+dx: -90,
+connector: { end: "arrow" }
+}]
+
+const annotation_advanced = [{
+note: {
+       label: "Shiga Kogen",
+       title: "Best for Advanced"
+      },
+data: {Resort: "Shiga Kogen",	Overall: 81},
+x: 257,
+y: 246,
+dy: -70,
+dx: -70,
+connector: { end: "arrow" }
+}]
+
+if (category=="Beginner") {
+  makeAnnotations_beginner = d3.annotation()
+  .type(type)
+  .annotations(annotation_beginner)
+}
+
+if (category=="Intermediate") {
+  makeAnnotations_intermediate = d3.annotation()
+  .type(type)
+  .annotations(annotation_intermediate)
+}
+
+if (category=="Advanced") {
+  makeAnnotations_advanced = d3.annotation()
+  .type(type)
+  .annotations(annotation_advanced)
+}
+
+
+d3.select("#svg1").selectAll(".annotation-group").remove();
+
+if (category=="Beginner") {
+d3.select("#svg1")
+.append("g")
+.attr("class", "annotation-group")
+.call(makeAnnotations_beginner)
+}
+
+if (category=="Intermediate") {
+d3.select("#svg1")
+.append("g")
+.attr("class", "annotation-group")
+.call(makeAnnotations_intermediate)
+}
+
+if (category=="Advanced") {
+d3.select("#svg1")
+.append("g")
+.attr("class", "annotation-group")
+.call(makeAnnotations_advanced)
+}
+
+
+
+
+
+// Add the bar chart
+
+svg2.selectAll("*").remove();
+
+var barG = svg2.append("g")
+
+var bar = barG.selectAll("rect")
+      .data(data.filter(function (d){return d.Class==category}))
+
+data.sort(function(a, b){return b.Overall - a.Overall})
+
+bar.enter()
+      .append("rect")
+      .attr("x", function (data) {return 10})
+      .attr("y", function (data, i) {return i * 50})
+      .attr("width", function(data) {return data.Overall * 2; })
+      .attr("height", function(data) {return 30; })
+      .attr("fill", "green")
+      .attr("transform","translate(150,70)")
+
+
+bar.exit().remove();
+
+//add label resort name and the value
+var label = svg2.append("g").selectAll("text")
+    .data(data.filter(function (d){return d.Class==category}))
+    .enter()
+    .append("text")
+    .attr("transform", "translate(0,85)")
+    .attr("x", function(d){return 40})
+    .attr("y", function(d, i){return i * 50})
+    .attr("dy", ".35em")
+    .attr("text-anchor", "start")
+    .text(function(d, i) { return i + 1 + ". " + d.Resort; });
+
+var mark = svg2.append("g").selectAll("text")
+    .data(data.filter(function (d){return d.Class==category}))
+    .enter()
+    .append("text")
+    .attr("transform", "translate(150,85)")
+    .attr("x", function(d){return d.Overall * 2 + 30})
+    .attr("y", function(d, i){return i * 50})
+    .attr("dy", ".35em")
+    .attr("text-anchor", "start")
+    .text(function(d, i) { return d.Overall; });
+
+
+
+
+
+
+};
+
+
+
+
+  function select(category){
+    render(data, category);
+  }
+
+
+  </script>
+  </div>
+
+
+
+</body>
